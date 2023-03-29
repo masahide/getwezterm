@@ -16,10 +16,18 @@ deb () {
 
 rpm () {
     os=$1
+    osword=$os
+    case $1 in
+     amzn2 )
+         osword=centos7;;
+     amzn2022 )
+         osword=centos8;;
+    esac
+
     docker run -e u=$(id -u) -e g=$(id -g) -v $PWD:/mnt \
      -it --rm ubuntu:22.04 bash -c \
     'apt update -y && apt install -y rpm2cpio jq cpio curl &&
-    curl -sL $(curl -sL '$apiurl'|jq -r ".assets[].browser_download_url"|grep -i '$os'|grep rpm$) | rpm2cpio | cpio -idv &&
+    curl -sL $(curl -sL '$apiurl'|jq -r ".assets[].browser_download_url"|grep -i '$osword'|grep rpm$) | rpm2cpio | cpio -idv &&
     tar -C usr/bin -czf /mnt/'$os'.tar.gz wezterm wezterm-mux-server &&
     chown $u:$g /mnt/'$os'.tar.gz'
 }
@@ -28,7 +36,7 @@ rpm () {
 case $1 in
     ubuntu18 | ubuntu20 | ubuntu22 | debian10 | debian11)
         [[ -e $1.tar.gz ]] || deb $1;;
-    centos7 | centos8 | centos9)
+    centos7 | centos8 | centos9 | amzn2* )
         [[ -e $1.tar.gz ]] || rpm $1;;
     *)
         echo undefined OS;;
