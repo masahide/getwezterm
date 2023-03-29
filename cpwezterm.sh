@@ -11,10 +11,8 @@ echo $os
 
 ./getwezterm.sh $os
 
-scp $os.tar.gz $1:wezterm.tar.gz
-ssh $1 "mkdir -p .local/bin &&
-    tar -C .local/bin -xzvf wezterm.tar.gz
-"
+echo ssh $1 mkdir
+ssh $1 "mkdir -p .local/bin"
 
-
-
+echo ssh "cat $os.tar.gz |ssh $1 tar -C .local/bin -xzv"
+cat $os.tar.gz |ssh $1 "tar -C .local/bin -xzv"
