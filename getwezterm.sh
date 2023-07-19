@@ -20,7 +20,7 @@ rpm () {
     case $1 in
      amzn2 )
          osword=centos7;;
-     amzn2022 )
+     amzn2023 )
          osword=centos8;;
     esac
 
@@ -32,6 +32,10 @@ rpm () {
     chown $u:$g /mnt/'$os'.tar.gz'
 }
 
+
+if [[ $2 -eq "update" ]]; then
+    rm -f $1.tar.gz
+fi
 
 case $1 in
     ubuntu18 | ubuntu20 | ubuntu22 | debian10 | debian11)

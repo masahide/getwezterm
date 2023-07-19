@@ -16,3 +16,4 @@ ssh $1 "mkdir -p .local/bin"
 
 echo ssh "cat $os.tar.gz |ssh $1 tar -C .local/bin -xzv"
 cat $os.tar.gz |ssh $1 "tar -C .local/bin -xzv"
+ssh $1 "pkill -e wezterm"
