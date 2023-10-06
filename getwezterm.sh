@@ -21,7 +21,7 @@ rpm () {
      amzn2 )
          osword=centos7;;
      amzn2023 )
-         osword=centos8;;
+         osword=fedora38;;
     esac
 
     docker run -e u=$(id -u) -e g=$(id -g) -v $PWD:/mnt \
